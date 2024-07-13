@@ -1,7 +1,6 @@
 /**
 * index.js
 * This is the API main entry point
-* Editted by Wong Zheng Jie
 */
 
 require('dotenv').config();
