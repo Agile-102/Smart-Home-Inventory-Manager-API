@@ -28,6 +28,10 @@ database.once('connected', () => {
 })
 
 /* Routes */
-const routes = require('./routes/routes');
+const spaceRoutes = require('./routes/space_routes');
+const subSpaceRoutes = require('./routes/sub_space_routes');
+const itemRoutes = require('./routes/item_routes');
 
-app.use('/api', routes)
+app.use('/api', spaceRoutes);
+app.use('/api', subSpaceRoutes);
+app.use('/api', itemRoutes);
