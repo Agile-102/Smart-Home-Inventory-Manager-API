@@ -6,7 +6,7 @@ const Space = require('../models/space');
 const router = express.Router();
 
 // Create a new space
-router.post('/spaces', async (req, res) => {
+router.post('/', async (req, res) => {
     const userId = req.body.user_id;
 
     // Validate the user_id
@@ -28,8 +28,8 @@ router.post('/spaces', async (req, res) => {
 });
 
 // Get all spaces for a user
-router.get('/spaces', async (req, res) => {
-    const userId = req.body.user_id;
+router.get('/', async (req, res) => {
+    const userId = req.query.user_id;
 
     // Validate the user_id
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -45,7 +45,7 @@ router.get('/spaces', async (req, res) => {
 });
 
 // Get space by ID
-router.get('/spaces/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const space = await Space.findById(req.params.id);
         res.json(space);
@@ -55,7 +55,7 @@ router.get('/spaces/:id', async (req, res) => {
 });
 
 // Update space by ID
-router.patch('/spaces/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const updatedSpace = await Space.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.json(updatedSpace);
@@ -65,7 +65,7 @@ router.patch('/spaces/:id', async (req, res) => {
 });
 
 // Delete space by ID
-router.delete('/spaces/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const deletedSpace = await Space.findOneAndDelete({ _id: req.params.id });
         res.json({ message: `Space ${deletedSpace.space_name} deleted` });

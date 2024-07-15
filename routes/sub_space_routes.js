@@ -6,19 +6,18 @@ const Space = require('../models/space');
 const router = express.Router();
 
 // Create a new sub-space
-router.post('/sub_spaces', async (req, res) => {
-    const { sub_space_name, space_id } = req.body;
+router.post('/', async (req, res) => {
+    const { sub_space_name, space } = req.body;
 
-    // Validate space_id and user_id
     try {
-        const space = await Space.findById(space_id);
-        if (!space || space.user_id.toString() !== req.body.user_id) {
-            return res.status(404).json({ message: "Space not found or not authorized" });
+        const foundSpace = await Space.findById(space);
+        if (!foundSpace) {
+            return res.status(404).json({ message: "Space not found" });
         }
 
         const sub_space = new Sub_space({
-            sub_space_name: sub_space_name,
-            space: space_id
+            space: foundSpace._id,
+            sub_space_name: sub_space_name
         });
 
         try {
@@ -33,7 +32,7 @@ router.post('/sub_spaces', async (req, res) => {
 });
 
 // Get all sub-spaces for a user
-router.get('/sub_spaces', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const sub_spaces = await Sub_space.find().populate({
             path: 'space',
@@ -46,7 +45,7 @@ router.get('/sub_spaces', async (req, res) => {
 });
 
 // Get sub-space by ID
-router.get('/sub_spaces/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const sub_space = await Sub_space.findById(req.params.id).populate('space');
         res.json(sub_space);
@@ -56,7 +55,7 @@ router.get('/sub_spaces/:id', async (req, res) => {
 });
 
 // Update sub-space by ID
-router.patch('/sub_spaces/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const updatedSub_space = await Sub_space.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('space');
         res.json(updatedSub_space);
@@ -66,9 +65,12 @@ router.patch('/sub_spaces/:id', async (req, res) => {
 });
 
 // Delete sub-space by ID
-router.delete('/sub_spaces/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
-        const deletedSub_space = await Sub_space.findByIdAndDelete(req.params.id);
+        const deletedSub_space = await Sub_space.findOneAndDelete({ _id: req.params.id });
+        if (!deletedSub_space) {
+            return res.status(404).json({ message: "Sub-space not found" });
+        }
         res.json({ message: `Sub-space ${deletedSub_space.sub_space_name} deleted` });
     } catch (error) {
         res.status(400).json({ message: error.message });
