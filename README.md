@@ -66,3 +66,17 @@ Testing endpoints should be done through Postman application or via curl.
 }
 
 * DELETE http://localhost:3000/api/spaces/id
+
+## Database Datas
+The required datas in under the different databases are arranged in order.
+1. spaces
+   * user_id: userId,
+   * space_name: req.body.space_name
+2. sub_spaces
+   * space: foundSpace._id,
+   * sub_space_name: sub_space_name
+3. items
+   * sub_space: sub_space_id,
+   * quantity: quantity,
+   * item_name: item_name,
+   * expiry_date: expiry_date
