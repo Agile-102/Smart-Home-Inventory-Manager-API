@@ -2,6 +2,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const authenticate = require('./auth');
 const app = express();
 require('dotenv').config();
 
@@ -33,8 +34,8 @@ const spaceRoutes = require('../routes/space_routes');
 const subSpaceRoutes = require('../routes/sub_space_routes');
 const itemRoutes = require('../routes/item_routes');
 
-app.use('/api/spaces', spaceRoutes);
-app.use('/api/sub_spaces', subSpaceRoutes);
-app.use('/api/items', itemRoutes);
+app.use('/api/spaces', authenticate, spaceRoutes);
+app.use('/api/sub_spaces', authenticate, subSpaceRoutes);
+app.use('/api/items', authenticate, itemRoutes);
 
 module.exports = app;
