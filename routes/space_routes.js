@@ -9,11 +9,6 @@ const router = express.Router();
 router.post('/', async (req, res) => {
     const userId = req.body.user_id;
 
-    // Validate the user_id
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-        return res.status(400).json({ message: "Invalid user_id" });
-    }
-
     const space = new Space({
         user_id: userId,
         space_name: req.body.space_name
@@ -31,8 +26,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     const userId = req.query.user_id;
 
-    // Validate the user_id
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
+    if (typeof userId !== 'string') {
         return res.status(400).json({ message: "Invalid user_id" });
     }
 
@@ -66,8 +60,18 @@ router.patch('/:id', async (req, res) => {
 
 // Delete space by ID
 router.delete('/:id', async (req, res) => {
+    const spaceId = req.params.id;
+
+    // Validate the space ID
+    if (!mongoose.Types.ObjectId.isValid(spaceId)) {
+        return res.status(400).json({ message: "Invalid space ID" });
+    }
+
     try {
-        const deletedSpace = await Space.findOneAndDelete({ _id: req.params.id });
+        const deletedSpace = await Space.findOneAndDelete({ _id: spaceId });
+        if (!deletedSpace) {
+            return res.status(404).json({ message: "Space not found" });
+        }
         res.json({ message: `Space ${deletedSpace.space_name} deleted` });
     } catch (error) {
         res.status(400).json({ message: error.message });

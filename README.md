@@ -22,7 +22,7 @@ A Smart Home Inventory Manager for homeowners to keep track of and find househol
 
 4. Start the server:
     ```sh
-    node index.js
+    node api/index.js
     ```
 
 5. To connect to the database, ensure you have the correct `DATABASE_URL` in your `.env` file.
