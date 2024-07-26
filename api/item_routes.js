@@ -1,4 +1,4 @@
-// routes/item_routes.js
+// api/item_routes.js
 
 const express = require('express');
 const mongoose = require('mongoose');

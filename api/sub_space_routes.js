@@ -1,4 +1,4 @@
-// routes/sub_space_routes.js
+// api/sub_space_routes.js
 
 const express = require('express');
 const Sub_space = require('../models/sub_space');

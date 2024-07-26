@@ -1,4 +1,4 @@
-// routes/space_routes.js
+// api/space_routes.js
 
 const express = require('express');
 const mongoose = require('mongoose');

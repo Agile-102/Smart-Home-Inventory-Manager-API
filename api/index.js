@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const app = express();
 require('dotenv').config();
 
-const mongoString = process.env.DATABASE_URL;
+const mongoString = process.env.MONGODB_URI;
 
 app.use(express.json());
 
@@ -29,9 +29,9 @@ app.listen(3000, () => {console.log(`Server Started at ${3000}`)})
 */
 app.listen(3000, () => {console.log(`Server Started at ${3000}`)})
 /* Routes */
-const spaceRoutes = require('../routes/space_routes');
-const subSpaceRoutes = require('../routes/sub_space_routes');
-const itemRoutes = require('../routes/item_routes');
+const spaceRoutes = require('./space_routes');
+const subSpaceRoutes = require('./sub_space_routes');
+const itemRoutes = require('./item_routes');
 
 app.use('/api/spaces', spaceRoutes);
 app.use('/api/sub_spaces', subSpaceRoutes);
