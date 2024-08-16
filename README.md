@@ -1,82 +1,36 @@
-<!-- 
-Project guide by freeCodeCamp, Nishant Kumar: https://www.freecodecamp.org/news/build-a-restful-api-using-node-express-and-mongodb/
-Postman application to check endpoints (not so efficient, where some data is represented as null when MongoDB states otherwise): https://www.postman.com/downloads/
--->
+# Smart-Home-Inventory-Manager API
 
-# Smart-Home-Inventory-Manager-API
-A Smart Home Inventory Manager for homeowners to keep track of and find household inventory items efficiently
+## Setup Instructions
+- After cloning repo, open up console and enter `npm i` to install required packages.
+- To use your own MongoDB, open the `.env` file and change the `MONGODB_URI` to your own link (refer to `.env.example` file)
+- If `.env` doesn't exist, create a new `.env` file in the root folder /shim-api
 
-# Working on this Repo
-1. Copy the repo into your working dir to get started
-    ```sh
-    git clone https://github.com/Agile-102/Smart-Home-Inventory-Manager-API.git
-    ```
+If the above steps are fulfilled, open a terminal and enter `npm run dev` to initiate API on local machine.
 
-2. Create a `.env` file in the root of the project and add the required environment variables. Refer to the `.env.example` file for the variables needed.
-<!-- Please inform Zheng Jie your MongoDB Username, email-->
-   
-3. Install the dependencies:
-    ```sh
-    npm install
-    ```
+## How to test
+Once API is running, Postman app is strongly recommended for testing!
+If Postman is not installed on your device, please install it from [here](https://www.postman.com/downloads/)! 
 
-4. Start the server:
-    ```sh
-    node api/index.js
-    ```
-
-5. To connect to the database, ensure you have the correct `DATABASE_URL` in your `.env` file.
-
-## To note:
-
-1. The database is hosted on MongoDB server with mongod.cfg file. So you may require those directories to exist (you may need to create C:\data\db and C:\data\log).
-   
-2. API is hosted on Vercel at https://smart-home-inventory-manager-4pzu2nxpd-w-zheng-jies-projects.vercel.app/
-
-## Dependencies
-
-Here are the dependencies used:
-- `express` for the middleware to create various CRUD endpoints.
-- `mongoose` for managing data in MongoDB using various queries.
-- `nodemon` to restart our server every time we save our file.
-- `dotenv` to manage a .env file.
-  
-You can install the necessary Node.js packages by running:
-    ```
-    npm install
-    ```
-
-## Local Testing Example
-Testing endpoints should be done through Postman application or via curl.
-* POST http://localhost:3000/api/spaces
-
-{ <br>
-  "user_id": "60c72b2f9b1d8e4a5c8e3b3d",<br>
-  "space_name": "Kitchen"<br>
+Once logged in to Postman, 
+- Select the appropriate method
+- Enter the correct link. (http://localhost:3000 followed by the appropriate data end points, e.g. http://localhost:3000/room/addRoom)
+- Below the link there should be a toolbar, click on "Body" and select "raw"
+- Enter test info in JSON format ie
+```
+{
+  "username": "user 1",
+  "roomName": "room 1"
 }
+```
+- Click on send to check if API works
 
-* GET http://localhost:3000/api/spaces
-
-* GET http://localhost:3000/api/spaces/id
-
-* PATCH http://localhost:3000/api/spaces/id
-
-{<br>
-  "space_name": "Updated Space"<br>
-}
-
-* DELETE http://localhost:3000/api/spaces/id
-
-## Database Datas
-The required datas in under the different databases are arranged in order.
-1. spaces
-   * user_id: userId,
-   * space_name: req.body.space_name
-2. sub_spaces
-   * space: foundSpace._id,
-   * sub_space_name: sub_space_name
-3. items
-   * sub_space: sub_space_id,
-   * quantity: quantity,
-   * item_name: item_name,
-   * expiry_date: expiry_date
+## Staus Codes
+- **200** - Request OK
+- **400** - Connection Error
+- **501** - User not found
+- **502** - Room already exists
+- **503** - Room(s) not found
+- **504** - Item already exists
+- **505** - Item(s) not found
+- **506** - Subspace already exists
+- **507** - Subspace(s) not found

@@ -1,6 +1,9 @@
 node_modules
-.env
-*.db
-.vscode
+
+functions
+# Local Netlify folder
+.netlify
 
 .vercel
+.env*.local
+.env
