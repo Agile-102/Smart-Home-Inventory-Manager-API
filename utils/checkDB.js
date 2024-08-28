@@ -29,7 +29,7 @@ module.exports = {
     },
 
     /** Check if an item exists for a room */
-    checkIfItemExists: async function (roomId, itemName) {
+    checkIfItemExistsRoom: async function (roomId, itemName) {
         const item = await Items.exists(
             { itemName: itemName, room: roomId }
         )
@@ -42,7 +42,7 @@ module.exports = {
     },
 
     /** Check if an item exists for a subspace */
-    checkIfItemExists: async function (spaceId, itemName) {
+    checkIfItemExistsSpace: async function (spaceId, itemName) {
         const item = await Items.exists(
             { itemName: itemName, subspace: spaceId }
         )

@@ -203,7 +203,7 @@ router.post('/addItem', async (req, res) => {
             const room = await checkDB.checkIfRoomExists(user, roomName) // Check room
 
             if ( room ) {
-                const item = await checkDB.checkIfItemExists(room, itemName) // Check item
+                const item = await checkDB.checkIfItemExistsRoom(room, itemName) // Check item
 
                 if ( !item ) {
                     await db.addItemToRoom(user, room, itemName)
@@ -284,7 +284,7 @@ router.patch('/editItem', async (req, res) => {
             const room = await checkDB.checkIfRoomExists(user, roomName) // Check room
 
             if ( room ) {
-                const item = await checkDB.checkIfItemExists(room, oldName) // Check item
+                const item = await checkDB.checkIfItemExistsRoom(room, oldName) // Check item
                 if ( item ) {
                     await db.editItemOfRoom(item, newName)
                     res.status(200)
@@ -322,7 +322,7 @@ router.delete('/deleteItem', async (req, res) => {
             const room = await checkDB.checkIfRoomExists(user, roomName) // Check room
 
             if ( room ) {
-                const item = await checkDB.checkIfItemExists(room, itemName) // Check item
+                const item = await checkDB.checkIfItemExistsRoom(room, itemName) // Check item
                 if ( item ) {
                     await db.deleteItemOfRoom(item)
                     res.status(200)

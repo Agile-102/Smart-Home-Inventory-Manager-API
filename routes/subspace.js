@@ -254,7 +254,7 @@ router.post('/addItem', async (req, res) => {
             if ( room ) {
                 const subspace = await checkDB.checkIfSubspaceExists(room, spaceName) // Check subspace
                 if ( subspace ) {
-                    const item = await checkDB.checkIfItemExists(subspace, itemName)
+                    const item = await checkDB.checkIfItemExistsSpace(subspace, itemName)
                     if ( !item ) {
                         await db.addItemIntoSpace(subspace, user, itemName)
                         res.status(200)
@@ -347,7 +347,7 @@ router.patch('/editItem', async (req, res) => {
             if ( room ) {
                 const subspace = await checkDB.checkIfSubspaceExists(room, spaceName) // Check subspace
                 if ( subspace ) {
-                    const item = await checkDB.checkIfItemExists(subspace, oldItemName) // Check item
+                    const item = await checkDB.checkIfItemExistsSpace(subspace, oldItemName) // Check item
                     if ( item ) {
                         await db.editItemInSpace(item, newItemName) // Update item
                         res.status(200)
@@ -392,7 +392,7 @@ router.delete('/deleteItem', async (req, res) => {
             if ( room ) {
                 const subspace = await checkDB.checkIfSubspaceExists(room, spaceName) // Check subspace
                 if ( subspace ) {
-                    const item = await checkDB.checkIfItemExists(subspace, itemName) // Check item
+                    const item = await checkDB.checkIfItemExistsSpace(subspace, itemName) // Check item
                     if ( item ) {
                         await db.deleteItemInSpace(item) // Delete item
                         res.status(200)
